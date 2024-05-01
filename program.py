@@ -4,6 +4,9 @@ from tkinter import messagebox
 # Deklarasi variabel global
 root = None
 entry = None
+harga_entry = None
+ukuran_entry = None
+resolusi_entry = None
 
 def filter_berdasarkan_harga_ukuran_resolusi():
     # Fungsi untuk filter berdasarkan harga, ukuran layar, dan resolusi layar
@@ -11,6 +14,14 @@ def filter_berdasarkan_harga_ukuran_resolusi():
     
     # Sementara, untuk contoh, kembalikan hasil dummy
     return ["Monitor 1", "Monitor 2", "Monitor 3"]
+
+def filter_berdasarkan_harga():
+    # Fungsi untuk filter berdasarkan harga, ukuran layar, dan resolusi layar
+    # Implementasi logika filtering di sini
+    
+    # Sementara, untuk contoh, kembalikan hasil dummy
+    return ["Monitor 1", "Monitor 2", "Monitor 3"]
+
 
 def tampilkan_hasil_filter(hasil_filter):
     # Fungsi untuk menampilkan hasil filter
@@ -39,6 +50,7 @@ def process_input():
         harga_label.grid(row=0, column=0, sticky="w", padx=20, pady=5)  # Menempatkan label di bagian kiri atas
         
         # Input Harga
+        global harga_entry
         harga_entry = tk.Entry(filter_window)
         harga_entry.grid(row=1, column=0, padx=20, pady=5)  # Menempatkan input di bawah label
         
@@ -47,6 +59,7 @@ def process_input():
         ukuran_label.grid(row=2, column=0, sticky="w", padx=20, pady=5)  # Menempatkan label di bagian kiri atas
         
         # Input Ukuran Layar
+        global ukuran_entry
         ukuran_entry = tk.Entry(filter_window)
         ukuran_entry.grid(row=3, column=0, padx=20, pady=5)  # Menempatkan input di bawah label
         
@@ -55,6 +68,7 @@ def process_input():
         resolusi_label.grid(row=4, column=0, sticky="w", padx=20, pady=5)  # Menempatkan label di bagian kiri atas
         
         # Input Resolusi Layar
+        global resolusi_entry
         resolusi_entry = tk.Entry(filter_window)
         resolusi_entry.grid(row=5, column=0, padx=20, pady=5)  # Menempatkan input di bawah label
         
@@ -88,25 +102,27 @@ def process_input():
         filter_window = tk.Toplevel(root)
         filter_window.title("Filter Harga")
         
-        # Label Harga Awal
+        # Label dan Input Harga Awal
         harga_awal_label = tk.Label(filter_window, text="Harga Awal:")
-        harga_awal_label.grid(row=0, column=0, sticky="w", padx=20, pady=5)  # Menempatkan label di bagian kiri atas
-        
-        # Input Harga Awal
+        harga_awal_label.grid(row=0, column=0, sticky="w", padx=20, pady=5)
         harga_awal_entry = tk.Entry(filter_window)
-        harga_awal_entry.grid(row=0, column=1, padx=20, pady=5)  # Menempatkan input di bawah label
+        harga_awal_entry.grid(row=0, column=1, padx=20, pady=5)
         
-        # Label Harga Akhir
+        # Label dan Input Harga Akhir
         harga_akhir_label = tk.Label(filter_window, text="Harga Akhir:")
-        harga_akhir_label.grid(row=1, column=0, sticky="w", padx=20, pady=5)  # Menempatkan label di bagian kiri atas
-        
-        # Input Harga Akhir
+        harga_akhir_label.grid(row=1, column=0, sticky="w", padx=20, pady=5)
         harga_akhir_entry = tk.Entry(filter_window)
-        harga_akhir_entry.grid(row=1, column=1, padx=20, pady=5)  # Menempatkan input di bawah label
+        harga_akhir_entry.grid(row=1, column=1, padx=20, pady=5)
         
+        def apply_filter():
+            # Panggil fungsi filter dan tampilkan hasil
+            hasil_filter = filter_berdasarkan_harga()
+            tampilkan_hasil_filter(hasil_filter)
+            
         # Button Terapkan Filter
-        apply_button = tk.Button(filter_window, text="Terapkan Filter", command=filter_berdasarkan_harga)
+        apply_button = tk.Button(filter_window, text="Terapkan Filter", command=apply_filter)
         apply_button.grid(row=2, columnspan=2, padx=20, pady=5)  # Menempatkan tombol di bawah input
+
 
 
 
