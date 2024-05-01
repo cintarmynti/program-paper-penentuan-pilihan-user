@@ -1,43 +1,79 @@
 import tkinter as tk
 
+# Deklarasi variabel global
+root = None
+entry = None
+
 def filter_berdasarkan_harga_ukuran_resolusi():
     # Fungsi untuk filter berdasarkan harga, ukuran layar, dan resolusi layar
-    pass
-
-def filter_berdasarkan_harga():
-    # Fungsi untuk filter berdasarkan harga
-    pass
-
-def filter_berdasarkan_ukuran_layar():
-    # Fungsi untuk filter berdasarkan ukuran layar
-    pass
-
-def filter_berdasarkan_resolusi_layar():
-    # Fungsi untuk filter berdasarkan resolusi layar
-    pass
+    # Implementasi logika filtering di sini
+    
+    # Sementara, untuk contoh, kembalikan hasil dummy
+    return ["Monitor 1", "Monitor 2", "Monitor 3"]
 
 def tampilkan_hasil_filter(hasil_filter):
     # Fungsi untuk menampilkan hasil filter
-    pass
+    result_window = tk.Toplevel(root)
+    result_window.title("Hasil Filter")
+    
+    result_label = tk.Label(result_window, text="Hasil Filter:")
+    result_label.pack()
+    
+    result_text = tk.Text(result_window, width=40, height=10)
+    result_text.pack()
+    
+    for item in hasil_filter:
+        result_text.insert(tk.END, f"{item}\n")
 
 def process_input():
+    global entry  # Mengakses variabel entry yang dideklarasikan sebagai global
+    
     pilihan = entry.get("1.0", "end-1c")
     if pilihan == '1':
-        hasil_filter = filter_berdasarkan_harga_ukuran_resolusi()
-        tampilkan_hasil_filter(hasil_filter)
-    elif pilihan == '2':
-        hasil_filter = filter_berdasarkan_harga()
-        tampilkan_hasil_filter(hasil_filter)
-    elif pilihan == '3':
-        hasil_filter = filter_berdasarkan_ukuran_layar()
-        tampilkan_hasil_filter(hasil_filter)
-    elif pilihan == '4':
-        hasil_filter = filter_berdasarkan_resolusi_layar()
-        tampilkan_hasil_filter(hasil_filter)
-    else:
-        label_result.config(text="Pilihan tidak valid. Silakan pilih antara 1, 2, 3, atau 4.")
+        filter_window = tk.Toplevel(root)
+        filter_window.title("Filter Harga, Ukuran Layar, dan Resolusi")
+        
+        # Label Harga
+        harga_label = tk.Label(filter_window, text="Harga:")
+        harga_label.grid(row=0, column=0, sticky="w", padx=10, pady=5)  # Menempatkan label di bagian kiri atas
+        
+        # Input Harga
+        harga_entry = tk.Entry(filter_window)
+        harga_entry.grid(row=0, column=1, padx=10, pady=5)  # Menempatkan input di sebelah kanan label
+        
+        # Label Ukuran Layar
+        ukuran_label = tk.Label(filter_window, text="Ukuran Layar (inch):")
+        ukuran_label.grid(row=1, column=0, sticky="w", padx=10, pady=5)  # Menempatkan label di bagian kiri atas
+        
+        # Input Ukuran Layar
+        ukuran_entry = tk.Entry(filter_window)
+        ukuran_entry.grid(row=1, column=1, padx=10, pady=5)  # Menempatkan input di sebelah kanan label
+        
+        # Label Resolusi Layar
+        resolusi_label = tk.Label(filter_window, text="Resolusi Layar (contoh: 1920x1080):")
+        resolusi_label.grid(row=2, column=0, sticky="w", padx=10, pady=5)  # Menempatkan label di bagian kiri atas
+        
+        # Input Resolusi Layar
+        resolusi_entry = tk.Entry(filter_window)
+        resolusi_entry.grid(row=2, column=1, padx=10, pady=5)  # Menempatkan input di sebelah kanan label
+        
+        def apply_filter():
+            harga = float(harga_entry.get())
+            ukuran_layar = float(ukuran_entry.get())
+            resolusi = resolusi_entry.get()
+            lebar_resolusi_layar, tinggi_resolusi_layar = map(int, resolusi.split('x'))
+            
+            # Panggil fungsi filter
+            hasil_filter = filter_berdasarkan_harga_ukuran_resolusi()
+            tampilkan_hasil_filter(hasil_filter)
+            
+        apply_button = tk.Button(filter_window, text="Terapkan Filter", command=apply_filter)
+        apply_button.grid(row=3, columnspan=2)
+
+# Tambahkan logika untuk opsi lainnya
 
 def main():
+    global root, entry  # Deklarasi root dan entry sebagai variabel global
     root = tk.Tk()
     root.title("Program Rekomendasi Monitor")
     
@@ -47,7 +83,7 @@ def main():
     label_options = tk.Label(root, text="Pilihan:\n1: Filter harga, ukuran layar, dan resolusi\n2: Filter harga\n3: Filter ukuran layar\n4: Filter resolusi layar", justify="left")
     label_options.grid(row=1, column=0, padx=10)
 
-    entry = tk.Text(root, width=50, height=5, font=("Helvetica", 12))  # Mengatur width, height, dan font size
+    entry = tk.Text(root, width=30, height=5, font=("Helvetica", 12))  # Mengatur width, height, dan font size
     entry.grid(row=1, column=1, padx=10)
 
     button_process = tk.Button(root, text="Proses", command=process_input)
