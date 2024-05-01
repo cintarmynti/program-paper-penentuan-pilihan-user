@@ -22,6 +22,20 @@ def filter_berdasarkan_harga():
     # Sementara, untuk contoh, kembalikan hasil dummy
     return ["Monitor 1", "Monitor 2", "Monitor 3"]
 
+def filter_berdasarkan_ukuran_layar():
+    # Fungsi untuk filter berdasarkan harga, ukuran layar, dan resolusi layar
+    # Implementasi logika filtering di sini
+    
+    # Sementara, untuk contoh, kembalikan hasil dummy
+    return ["Monitor 1", "Monitor 2", "Monitor 3"]
+
+def filter_berdasarkan_resolusi_layar():
+    # Fungsi untuk filter berdasarkan harga, ukuran layar, dan resolusi layar
+    # Implementasi logika filtering di sini
+    
+    # Sementara, untuk contoh, kembalikan hasil dummy
+    return ["Monitor 1", "Monitor 2", "Monitor 3"]
+
 
 def tampilkan_hasil_filter(hasil_filter):
     # Fungsi untuk menampilkan hasil filter
@@ -123,6 +137,47 @@ def process_input():
         apply_button = tk.Button(filter_window, text="Terapkan Filter", command=apply_filter)
         apply_button.grid(row=2, columnspan=2, padx=20, pady=5)  # Menempatkan tombol di bawah input
 
+    elif pilihan == '3':
+        filter_window = tk.Toplevel(root)
+        filter_window.title("Filter Ukuran Layar")
+        
+        # Label Ukuran Layar
+        ukuran_label = tk.Label(filter_window, text="Ukuran Layar (inch):")
+        ukuran_label.grid(row=0, column=0, sticky="w", padx=20, pady=5)
+        
+        # Input Ukuran Layar
+        ukuran_entry = tk.Entry(filter_window)
+        ukuran_entry.grid(row=0, column=1, padx=20, pady=5)
+        
+        def apply_filter():
+            # Panggil fungsi filter dan tampilkan hasil
+            hasil_filter = filter_berdasarkan_ukuran_layar()
+            tampilkan_hasil_filter(hasil_filter)
+            
+        # Button Terapkan Filter
+        apply_button = tk.Button(filter_window, text="Terapkan Filter", command=apply_filter)
+        apply_button.grid(row=1, columnspan=2, padx=20, pady=5)  # Menempatkan tombol di bawah input
+
+    elif pilihan == '4':
+        filter_window = tk.Toplevel(root)
+        filter_window.title("Filter Resolusi Layar")
+        
+        # Label Resolusi Layar
+        resolusi_label = tk.Label(filter_window, text="Resolusi Layar (contoh: 1920x1080):")
+        resolusi_label.grid(row=0, column=0, sticky="w", padx=20, pady=5)
+        
+        # Input Resolusi Layar
+        resolusi_entry = tk.Entry(filter_window)
+        resolusi_entry.grid(row=0, column=1, padx=20, pady=5)
+        
+        def apply_filter():
+            # Panggil fungsi filter dan tampilkan hasil
+            hasil_filter = filter_berdasarkan_resolusi_layar()
+            tampilkan_hasil_filter(hasil_filter)
+            
+        # Button Terapkan Filter
+        apply_button = tk.Button(filter_window, text="Terapkan Filter", command=apply_filter)
+        apply_button.grid(row=1, columnspan=2, padx=20, pady=5)  # Menempatkan tombol di bawah input
 
 
 
