@@ -93,7 +93,7 @@ def filter_berdasarkan_resolusi_layar():
     lebar_resolusi_layar, tinggi_resolusi_layar = map(int, resolusi_layar_input.split('x'))
 
     # Memisahkan nilai lebar dan tinggi resolusi layar dari string di dalam DataFrame
-    dataframe['resolusi_layar_lebar'], dataframe['resolusi_layar_tinggi'] = zip(*dataframe['resolusi_layar'].str.split(',').apply(lambda x: [int(i) for i in x]))
+    dataframe['resolusi_layar_lebar'], dataframe['resolusi_layar_tinggi'] = zip(*dataframe['resolusi_layar'].str.split('x').apply(lambda x: [int(i) for i in x]))
 
     # Memilih baris dengan kriteria yang dimasukkan pengguna
     hasil_filter = dataframe.loc[(dataframe['resolusi_layar_lebar'] == lebar_resolusi_layar) &

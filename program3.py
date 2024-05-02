@@ -9,6 +9,8 @@ root = None
 harga_awal_entry = None
 harga_akhir_entry = None
 ukuran_layar_entry = None
+resolusi_layar_entry = None
+
 
 def filter_berdasarkan_harga_ukuran_resolusi(harga, ukuran_layar, resolusi_layar):
     resolusi_parts = resolusi_layar.split('x')
@@ -56,6 +58,16 @@ def filter_berdasarkan_ukuran():
     else:
         return pd.DataFrame(columns=['nama', 'harga', 'ukuran_layar', 'resolusi_layar'])
 
+def filter_berdasarkan_resolusi():
+    resolusi_layar = resolusi_layar_entry.get()
+
+    hasil_filter = dataframe.loc[dataframe['resolusi_layar'] == resolusi_layar]
+
+    if not hasil_filter.empty:
+        return hasil_filter
+    else:
+        return pd.DataFrame(columns=['nama', 'harga', 'ukuran_layar', 'resolusi_layar'])
+
 def tampilkan_hasil_filter(hasil_filter):
     result_window = tk.Toplevel(root)
     result_window.title("Hasil Filter")
@@ -71,7 +83,7 @@ def tampilkan_hasil_filter(hasil_filter):
         result_text.insert(tk.END, f"Nama Produk: {row['nama']}\nHarga: {row['harga']}\nUkuran Layar: {row['ukuran_layar']}\nResolusi Layar: {row['resolusi_layar']}\n\n")
 
 def process_input():
-    global harga_awal_entry, harga_akhir_entry, ukuran_layar_entry
+    global harga_awal_entry, harga_akhir_entry, ukuran_layar_entry, resolusi_layar_entry
 
     pilihan = entry.get("1.0", "end-1c")
     if pilihan == '1':
@@ -118,6 +130,22 @@ def process_input():
         apply_button = tk.Button(filter_window, text="Terapkan Filter", command=apply_filter)
         apply_button.grid(row=2, columnspan=2, padx=20, pady=5)
 
+    elif pilihan == '4' :
+        filter_window = tk.Toplevel(root)
+        filter_window.title("Resolusi Layar")
+
+        resolusi_layar_label = tk.Label(filter_window, text="Resolusi Layar:")
+        resolusi_layar_label.grid(row=0, column=0, sticky="w", padx=20, pady=5)
+        resolusi_layar_entry = tk.Entry(filter_window)
+        resolusi_layar_entry.grid(row=0, column=1, padx=20, pady=5)
+
+        def apply_filter():
+            resolusi_layar = resolusi_layar_entry.get()
+            hasil_filter = filter_berdasarkan_resolusi() 
+            tampilkan_hasil_filter(hasil_filter)
+            
+        apply_button = tk.Button(filter_window, text="Terapkan Filter", command=apply_filter)
+        apply_button.grid(row=2, columnspan=2, padx=20, pady=5)
 
 def main():
     global root, entry
