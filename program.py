@@ -1,5 +1,8 @@
 import tkinter as tk
+import pandas as pd
 from tkinter import messagebox
+nama_file_excel = 'data_normalisasi.xlsx'
+dataframe = pd.read_excel(nama_file_excel)
 
 # Deklarasi variabel global
 root = None
@@ -8,19 +11,46 @@ harga_entry = None
 ukuran_entry = None
 resolusi_entry = None
 
-def filter_berdasarkan_harga_ukuran_resolusi():
-    # Fungsi untuk filter berdasarkan harga, ukuran layar, dan resolusi layar
-    # Implementasi logika filtering di sini
-    
-    # Sementara, untuk contoh, kembalikan hasil dummy
-    return ["Monitor 1", "Monitor 2", "Monitor 3"]
+def filter_berdasarkan_harga_ukuran_resolusi(harga, ukuran_layar, resolusi_layar):
+    # Memisahkan nilai lebar dan tinggi resolusi layar dari input pengguna
+    resolusi_parts = resolusi_layar.split('x')
 
-def filter_berdasarkan_harga():
-    # Fungsi untuk filter berdasarkan harga, ukuran layar, dan resolusi layar
-    # Implementasi logika filtering di sini
-    
-    # Sementara, untuk contoh, kembalikan hasil dummy
-    return ["Monitor 1", "Monitor 2", "Monitor 3"]
+    # Memeriksa apakah format resolusi sesuai
+    if len(resolusi_parts) != 2:
+        messagebox.showerror("Error", "Format resolusi tidak valid. Gunakan format lebar x tinggi (misal: 1920x1080)")
+        return
+
+    try:
+        lebar_resolusi_layar, tinggi_resolusi_layar = map(int, resolusi_parts)
+    except ValueError:
+        messagebox.showerror("Error", "Format resolusi tidak valid. Gunakan format lebar x tinggi (misal: 1920x1080)")
+        return
+
+    # Memisahkan nilai lebar dan tinggi resolusi layar dari string di dalam DataFrame
+    dataframe['resolusi_layar_lebar'], dataframe['resolusi_layar_tinggi'] = zip(*dataframe['resolusi_layar'].str.split('x').apply(lambda x: [int(i) for i in x]))
+
+     # Memisahkan nilai lebar dan tinggi resolusi layar dari input pengguna
+    lebar_resolusi_layar, tinggi_resolusi_layar = map(int, resolusi_layar_input.split('x'))
+
+    # Memisahkan nilai lebar dan tinggi resolusi layar dari string di dalam DataFrame
+    dataframe['resolusi_layar_lebar'], dataframe['resolusi_layar_tinggi'] = zip(*dataframe['resolusi_layar'].str.split(',').apply(lambda x: [int(i) for i in x]))
+
+    # Memilih baris dengan kriteria yang dimasukkan pengguna
+    hasil_filter = dataframe.loc[(dataframe['harga'] == harga) & 
+                                  (dataframe['ukuran_layar'] == ukuran_layar) &
+                                  (dataframe['resolusi_layar_lebar'] == lebar_resolusi_layar) &
+                                  (dataframe['resolusi_layar_tinggi'] == tinggi_resolusi_layar), 'nama']
+
+    return hasil_filter
+
+
+def filter_berdasarkan_harga(harga_awal, harga_akhir):
+    hasil_filter = dataframe.loc[(dataframe['harga'] >= harga_awal) & 
+                                 (dataframe['harga'] <= harga_akhir), 
+                                 ['nama', 'harga', 'ukuran_layar', 'resolusi_layar']]
+
+    return hasil_filter
+
 
 def filter_berdasarkan_ukuran_layar():
     # Fungsi untuk filter berdasarkan harga, ukuran layar, dan resolusi layar
@@ -105,7 +135,7 @@ def process_input():
                 return
             
             # Panggil fungsi filter
-            hasil_filter = filter_berdasarkan_harga_ukuran_resolusi()
+            hasil_filter = filter_berdasarkan_harga_ukuran_resolusi(harga, ukuran_layar, resolusi)
             tampilkan_hasil_filter(hasil_filter)
         
         # Button Terapkan Filter
