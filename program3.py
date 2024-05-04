@@ -114,41 +114,51 @@ def process_input():
     pilihan = entry.get("1.0", "end-1c")
     
     if pilihan == '1':
-        # Membuat jendela baru
         filter_window = tk.Toplevel(root)
-        filter_window.title("Filter berdasarkan all")
+        filter_window.title("Filter Berdasarkan Harga")
+        filter_window.geometry("600x360")
 
-        # Label dan entri untuk harga
-        harga_all_label = tk.Label(filter_window, text="Harga :")
-        harga_all_label.grid(row=0, column=0, sticky="w", padx=20, pady=5)
-        harga_all_entry = tk.Entry(filter_window)
-        harga_all_entry.grid(row=0, column=1, padx=20, pady=5)
+        label_intro = ttk.Label(filter_window, text="Filter Berdasarkan Ukuran Monitor", font=("Helvetica", 14))
+        label_intro.grid(row=0, column=0, columnspan=2, padx=20, pady=(20, 10), sticky="n")
 
-        # Label dan entri untuk ukuran layar
-        ukuran_layar_all_label = tk.Label(filter_window, text="Ukuran Layar:")
-        ukuran_layar_all_label.grid(row=1, column=0, sticky="w", padx=20, pady=5)
-        ukuran_layar_all_entry = tk.Entry(filter_window)
-        ukuran_layar_all_entry.grid(row=1, column=1, padx=20, pady=5)
+        # Menempatkan label_intro di tengah window secara horizontal
+        filter_window.grid_columnconfigure(0, weight=1)
+        filter_window.grid_rowconfigure(0, weight=1)
 
-        # Label dan entri untuk resolusi layar
-        resolusi_layar_all_label = tk.Label(filter_window, text="Resolusi Layar:")
-        resolusi_layar_all_label.grid(row=2, column=0, sticky="w", padx=20, pady=5)
-        resolusi_layar_all_entry = tk.Entry(filter_window)
-        resolusi_layar_all_entry.grid(row=2, column=1, padx=20, pady=5)
+        harga_all_label = ttk.Label(filter_window, text="Masukkan Harga  : ")
+        harga_all_label.grid(row=1, column=0, padx=20, pady=5, sticky="w")
+
+        harga_all_entry = tk.Text(filter_window, height=1.5, font=("Helvetica", 12))
+        harga_all_entry.grid(row=2, column=0, padx=20, pady=5, sticky="ew")
+
+        ukuran_layar_label = ttk.Label(filter_window, text="Masukkan Ukuran Layar : ")
+        ukuran_layar_label.grid(row=3, column=0, padx=20, pady=5, sticky="w")
+
+        ukuran_layar_all_entry = tk.Text(filter_window, height=1.5, font=("Helvetica", 12))
+        ukuran_layar_all_entry.grid(row=4, column=0, padx=20, pady=5, sticky="ew")
+
+        resolusi_layar_label = ttk.Label(filter_window, text="Masukkan Ukuran Layar : ")
+        resolusi_layar_label.grid(row=5, column=0, padx=20, pady=5, sticky="w")
+
+        resolusi_layar_entry = tk.Text(filter_window, height=1.5, font=("Helvetica", 12))
+        resolusi_layar_entry.grid(row=6, column=0, padx=20, pady=5, sticky="ew")
 
         def apply_filter():
             # Mendapatkan nilai dari entri
-            harga = harga_all_entry.get()
-            ukuran = ukuran_layar_all_entry.get()
-            resolusi = resolusi_layar_all_entry.get()
+            harga = float(harga_all_entry.get("1.0", "end-1c"))
+            ukuran = float(ukuran_layar_all_entry.get("1.0", "end-1c"))
+            resolusi = resolusi_layar_entry.get("1.0", tk.END).strip()
 
             # Memanggil fungsi filter dan menampilkan hasil
             hasil_filter = filter_berdasarkan_all(harga, ukuran, resolusi)
             tampilkan_hasil_filter(hasil_filter)
 
-        # Tombol untuk menerapkan filter
-        apply_button = tk.Button(filter_window, text="Terapkan Filter", command=apply_filter)
-        apply_button.grid(row=3, columnspan=2, padx=20, pady=5)
+        apply_button = ttk.Button(filter_window, text="Terapkan Filter", command=apply_filter)
+        apply_button.grid(row=7, column=0, padx=20, pady=(10, 20), sticky="ew")
+
+        # Menentukan panjang label_intro agar mengisi seluruh lebar jendela
+        filter_window.update_idletasks()
+        label_intro.config(width=filter_window.winfo_width())
 
 
     elif pilihan == '2':
