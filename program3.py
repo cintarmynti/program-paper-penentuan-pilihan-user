@@ -34,10 +34,7 @@ def filter_berdasarkan_all(harga, ukuran, resolusi):
     return hasil_filter  # Mengembalikan DataFrame hasil filter
 
 
-def filter_berdasarkan_harga():
-    harga_awal = float(harga_awal_entry.get())
-    harga_akhir = float(harga_akhir_entry.get())
-
+def filter_berdasarkan_harga(harga_awal, harga_akhir):
     hasil_filter = dataframe.loc[(dataframe['harga'] >= harga_awal) & 
                                  (dataframe['harga'] <= harga_akhir), 
                                  ['nama', 'harga', 'ukuran_layar', 'resolusi_layar']]
@@ -155,27 +152,45 @@ def process_input():
 
 
     elif pilihan == '2':
+
         filter_window = tk.Toplevel(root)
-        filter_window.title("Filter Harga")
-        
-        harga_awal_label = tk.Label(filter_window, text="Harga Awal:")
-        harga_awal_label.grid(row=0, column=0, sticky="w", padx=20, pady=5)
-        harga_awal_entry = tk.Entry(filter_window)
-        harga_awal_entry.grid(row=0, column=1, padx=20, pady=5)
-        
-        harga_akhir_label = tk.Label(filter_window, text="Harga Akhir:")
-        harga_akhir_label.grid(row=1, column=0, sticky="w", padx=20, pady=5)
-        harga_akhir_entry = tk.Entry(filter_window)
-        harga_akhir_entry.grid(row=1, column=1, padx=20, pady=5)
-        
+        filter_window.title("Filter Berdasarkan Harga")
+        filter_window.geometry("600x320")
+
+        label_intro = ttk.Label(filter_window, text="Filter Monitor Berdasarkan Harga", font=("Helvetica", 14))
+        label_intro.grid(row=0, column=0, columnspan=2, padx=20, pady=(20, 10), sticky="n")
+
+        # Menempatkan label_intro di tengah window secara horizontal
+        filter_window.grid_columnconfigure(0, weight=1)
+        filter_window.grid_rowconfigure(0, weight=1)
+
+        harga_awal_label = ttk.Label(filter_window, text="Masukkan Harga Awal : ")
+        harga_awal_label.grid(row=1, column=0, padx=20, pady=5, sticky="w")
+
+        harga_awal_entry = tk.Text(filter_window, height=3, font=("Helvetica", 12))
+        harga_awal_entry.grid(row=2, column=0, padx=20, pady=5, sticky="ew")
+
+        harga_akhir_label = ttk.Label(filter_window, text="Masukkan Harga Akhir : ")
+        harga_akhir_label.grid(row=3, column=0, padx=20, pady=5, sticky="w")
+
+        harga_akhir_entry = tk.Text(filter_window, height=3, font=("Helvetica", 12))
+        harga_akhir_entry.grid(row=4, column=0, padx=20, pady=5, sticky="ew")
+
         def apply_filter():
-            harga_awal = float(harga_awal_entry.get())
-            harga_akhir = float(harga_akhir_entry.get())
-            hasil_filter = filter_berdasarkan_harga() 
+            harga_awal = float(harga_awal_entry.get("1.0", "end-1c"))
+            harga_akhir = float(harga_akhir_entry.get("1.0", "end-1c"))
+            hasil_filter = filter_berdasarkan_harga(harga_awal, harga_akhir) 
             tampilkan_hasil_filter(hasil_filter)
-            
-        apply_button = tk.Button(filter_window, text="Terapkan Filter", command=apply_filter)
-        apply_button.grid(row=2, columnspan=2, padx=20, pady=5)
+
+        apply_button = ttk.Button(filter_window, text="Terapkan Filter", command=apply_filter)
+        apply_button.grid(row=5, column=0, padx=20, pady=(10, 20), sticky="ew")
+
+        # Menentukan panjang label_intro agar mengisi seluruh lebar jendela
+        filter_window.update_idletasks()
+        label_intro.config(width=filter_window.winfo_width())
+
+
+
 
     elif pilihan == '3':
 
