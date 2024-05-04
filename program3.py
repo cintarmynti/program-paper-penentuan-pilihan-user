@@ -47,8 +47,8 @@ def filter_berdasarkan_harga():
     else:
         return pd.DataFrame(columns=['nama', 'harga', 'ukuran_layar', 'resolusi_layar'])
 
-def filter_berdasarkan_ukuran():
-    ukuran_layar = float(ukuran_layar_entry.get())
+def filter_berdasarkan_ukuran(ukuran_layar):
+    ukuran_layar = float(ukuran_layar_entry.get("1.0", tk.END).strip())
 
     hasil_filter = dataframe.loc[dataframe['ukuran_layar'] == ukuran_layar]
 
@@ -178,23 +178,37 @@ def process_input():
         apply_button.grid(row=2, columnspan=2, padx=20, pady=5)
 
     elif pilihan == '3':
-        filter_window = tk.Toplevel(root)
-        filter_window.title("Ukuran Layar")
-        
-        ukuran_layar_label = tk.Label(filter_window, text="Ukuran Layar:")
-        ukuran_layar_label.grid(row=0, column=0, sticky="w", padx=20, pady=5)
-        ukuran_layar_entry = tk.Entry(filter_window)
-        ukuran_layar_entry.grid(row=0, column=1, padx=20, pady=5)
-        
-        
-        def apply_filter():
-            ukuran_layar = float(ukuran_layar_entry.get())
-            hasil_filter = filter_berdasarkan_ukuran() 
-            tampilkan_hasil_filter(hasil_filter)
-            
-        apply_button = tk.Button(filter_window, text="Terapkan Filter", command=apply_filter)
-        apply_button.grid(row=2, columnspan=2, padx=20, pady=5)
 
+        filter_window = tk.Toplevel(root)
+        filter_window.title("Filter Berdasarkan Ukuran Layar")
+        filter_window.geometry("600x320")
+
+        label_intro = ttk.Label(filter_window, text="Filter Monitor Berdasarkan Resolusi", font=("Helvetica", 14))
+        label_intro.grid(row=0, column=0, columnspan=2, padx=20, pady=(20, 10), sticky="n")
+
+        ukuran_layar_label = ttk.Label(filter_window, text="Masukkan Ukuran Layar Yang Di Inginkan : ")
+        ukuran_layar_label.grid(row=1, column=0, padx=20, pady=5, sticky="w")
+
+        ukuran_layar_entry = tk.Text(filter_window, height=3, font=("Helvetica", 12))
+        ukuran_layar_entry.grid(row=2, column=0, columnspan=2, padx=20, pady=5, sticky="ew")
+
+        def apply_filter():
+            ukuran_layar = ukuran_layar_entry.get("1.0", tk.END).strip()
+            hasil_filter = filter_berdasarkan_ukuran(ukuran_layar)
+            tampilkan_hasil_filter(hasil_filter)
+
+        apply_button = ttk.Button(filter_window, text="Terapkan Filter", command=apply_filter)
+        apply_button.grid(row=3, column=0, columnspan=2, padx=20, pady=(10, 20), sticky="ew")
+
+        # Konfigurasi agar kolom dan baris jendela menyesuaikan konten
+        filter_window.grid_columnconfigure(0, weight=1)
+        filter_window.grid_columnconfigure(1, weight=1)
+        filter_window.grid_rowconfigure(0, weight=1)
+        filter_window.grid_rowconfigure(1, weight=1)
+        filter_window.grid_rowconfigure(2, weight=1)
+        filter_window.grid_rowconfigure(3, weight=1)
+
+        
 
     elif pilihan == '4':
         filter_window = tk.Toplevel(root)
