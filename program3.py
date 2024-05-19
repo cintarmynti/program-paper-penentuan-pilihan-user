@@ -115,10 +115,10 @@ def process_input():
     
     if pilihan == '1':
         filter_window = tk.Toplevel(root)
-        filter_window.title("Filter Berdasarkan Harga")
+        filter_window.title("Filter Berdasarkan Semua")
         filter_window.geometry("600x360")
 
-        label_intro = ttk.Label(filter_window, text="Filter Berdasarkan Ukuran Monitor", font=("Helvetica", 14))
+        label_intro = ttk.Label(filter_window, text="Filter Berdasarkan Semua", font=("Helvetica", 14))
         label_intro.grid(row=0, column=0, columnspan=2, padx=20, pady=(20, 10), sticky="n")
 
         # Menempatkan label_intro di tengah window secara horizontal
@@ -208,7 +208,7 @@ def process_input():
         filter_window.title("Filter Berdasarkan Ukuran Layar")
         filter_window.geometry("600x320")
 
-        label_intro = ttk.Label(filter_window, text="Filter Monitor Berdasarkan Resolusi", font=("Helvetica", 14))
+        label_intro = ttk.Label(filter_window, text="Filter Monitor Berdasarkan Ukuran", font=("Helvetica", 14))
         label_intro.grid(row=0, column=0, columnspan=2, padx=20, pady=(20, 10), sticky="n")
 
         ukuran_layar_label = ttk.Label(filter_window, text="Masukkan Ukuran Layar Yang Di Inginkan : ")
