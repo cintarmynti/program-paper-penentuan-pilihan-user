@@ -109,9 +109,9 @@ def tampilkan_hasil_filter(hasil_filter):
 
 
 def process_input():
-    global harga_awal_entry, harga_akhir_entry, ukuran_layar_entry, resolusi_layar_entry, harga_all_entry, ukuran_layar_all_entry, resolusi_layar_all_entry
+    global harga_awal_entry, harga_akhir_entry, ukuran_layar_entry, resolusi_layar_entry, harga_all_entry, ukuran_layar_all_entry, resolusi_layar_all_entry, combo
 
-    pilihan = entry.get("1.0", "end-1c")
+    pilihan = combo.get()
     
     if pilihan == '1':
         filter_window = tk.Toplevel(root)
@@ -137,7 +137,7 @@ def process_input():
         ukuran_layar_all_entry = tk.Text(filter_window, height=1.5, font=("Helvetica", 12))
         ukuran_layar_all_entry.grid(row=4, column=0, padx=20, pady=5, sticky="ew")
 
-        resolusi_layar_label = ttk.Label(filter_window, text="Masukkan Ukuran Layar : ")
+        resolusi_layar_label = ttk.Label(filter_window, text="Masukkan Resolusi Layar : ")
         resolusi_layar_label.grid(row=5, column=0, padx=20, pady=5, sticky="w")
 
         resolusi_layar_entry = tk.Text(filter_window, height=1.5, font=("Helvetica", 12))
@@ -159,7 +159,6 @@ def process_input():
         # Menentukan panjang label_intro agar mengisi seluruh lebar jendela
         filter_window.update_idletasks()
         label_intro.config(width=filter_window.winfo_width())
-
 
     elif pilihan == '2':
 
@@ -199,9 +198,6 @@ def process_input():
         filter_window.update_idletasks()
         label_intro.config(width=filter_window.winfo_width())
 
-
-
-
     elif pilihan == '3':
 
         filter_window = tk.Toplevel(root)
@@ -211,7 +207,7 @@ def process_input():
         label_intro = ttk.Label(filter_window, text="Filter Monitor Berdasarkan Ukuran", font=("Helvetica", 14))
         label_intro.grid(row=0, column=0, columnspan=2, padx=20, pady=(20, 10), sticky="n")
 
-        ukuran_layar_label = ttk.Label(filter_window, text="Masukkan Ukuran Layar Yang Di Inginkan : ")
+        ukuran_layar_label = ttk.Label(filter_window, text="Masukkan Ukuran Layar Yang Diinginkan : ")
         ukuran_layar_label.grid(row=1, column=0, padx=20, pady=5, sticky="w")
 
         ukuran_layar_entry = tk.Text(filter_window, height=3, font=("Helvetica", 12))
@@ -232,8 +228,6 @@ def process_input():
         filter_window.grid_rowconfigure(1, weight=1)
         filter_window.grid_rowconfigure(2, weight=1)
         filter_window.grid_rowconfigure(3, weight=1)
-
-        
 
     elif pilihan == '4':
         filter_window = tk.Toplevel(root)
@@ -268,36 +262,23 @@ def process_input():
 
 import tkinter as tk
 from tkinter import ttk
-
-
+   
 def main():
-    global root, entry, label_result
-    root = tk.Tk()
-    root.title("Program Rekomendasi Monitor")
-    root.geometry("600x320")
-
-    style = ttk.Style()
-    style.theme_use("clam")  # Ganti dengan tema yang diinginkan
-
-    label_intro = ttk.Label(root, text="Selamat Datang di Program Rekomendasi Monitor", font=("Helvetica", 14))
-    label_intro.pack(pady=10)
-
-    options_frame = ttk.Frame(root)
-    options_frame.pack(pady=10)
-
-    label_options = ttk.Label(options_frame, text="Pilihan:\n1: Filter harga, ukuran layar, dan resolusi\n2: Filter harga\n3: Filter ukuran layar\n4: Filter resolusi layar", justify="left", wraplength=200)
+    global root, combo
     
-    label_options.grid(row=0, column=0, padx=10)
-
-    entry = tk.Text(options_frame, width=30, height=10, font=("Helvetica", 12))
-    entry.grid(row=0, column=1, padx=10, pady=5)
-
-    button_process = ttk.Button(root, text="Proses", command=process_input)
-    button_process.pack(pady=10)
-
-    label_result = ttk.Label(root, text="")
-    label_result.pack()
-
+    root = tk.Tk()
+    root.title("Program Filter Monitor")
+    root.geometry("300x200")
+    
+    label_intro = ttk.Label(root, text="Pilih Opsi Filter:", font=("Helvetica", 14))
+    label_intro.pack(pady=10)
+    
+    combo = ttk.Combobox(root, values=["1", "2", "3", "4"])
+    combo.pack(pady=10)
+    
+    button = ttk.Button(root, text="Submit", command=process_input)
+    button.pack(pady=10)
+    
     root.mainloop()
 
 if __name__ == "__main__":
