@@ -84,7 +84,7 @@ def tampilkan_hasil_filter(hasil_filter):
     # filter_window = tk.Toplevel(root)
     # filter_window.geometry("1366x768")
 
-    result_label = ttk.Label(result_window, text="Hasil Filter:", font=("Helvetica", 14))
+    result_label = ttk.Label(result_window, text="Hasil Filter:", font=("Helvetica", 24))
     result_label.pack(pady=10)
 
     result_frame = ttk.Frame(result_window)
@@ -109,72 +109,36 @@ def process_input():
 
     pilihan = combo.get()
     
+   
+
     if pilihan == '1':
-        filter_window = tk.Toplevel(root)
-        filter_window.title("Filter Berdasarkan Semua")
-        filter_window.geometry("600x360")
-
-        label_intro = ttk.Label(filter_window, text="Filter Berdasarkan Semua", font=("Helvetica", 14))
-        label_intro.grid(row=0, column=0, columnspan=2, padx=20, pady=(20, 10), sticky="n")
-
-        # Menempatkan label_intro di tengah window secara horizontal
-        filter_window.grid_columnconfigure(0, weight=1)
-        filter_window.grid_rowconfigure(0, weight=1)
-
-        harga_all_label = ttk.Label(filter_window, text="Masukkan Harga  : ")
-        harga_all_label.grid(row=1, column=0, padx=20, pady=5, sticky="w")
-
-        harga_all_entry = tk.Text(filter_window, height=1.5, font=("Helvetica", 12))
-        harga_all_entry.grid(row=2, column=0, padx=20, pady=5, sticky="ew")
-
-        ukuran_layar_label = ttk.Label(filter_window, text="Masukkan Ukuran Layar : ")
-        ukuran_layar_label.grid(row=3, column=0, padx=20, pady=5, sticky="w")
-
-        ukuran_layar_all_entry = tk.Text(filter_window, height=1.5, font=("Helvetica", 12))
-        ukuran_layar_all_entry.grid(row=4, column=0, padx=20, pady=5, sticky="ew")
-
-        resolusi_layar_label = ttk.Label(filter_window, text="Masukkan Resolusi Layar : ")
-        resolusi_layar_label.grid(row=5, column=0, padx=20, pady=5, sticky="w")
-
-        resolusi_layar_entry = tk.Text(filter_window, height=1.5, font=("Helvetica", 12))
-        resolusi_layar_entry.grid(row=6, column=0, padx=20, pady=5, sticky="ew")
-
-        def apply_filter():
-            # Mendapatkan nilai dari entri
-            harga = float(harga_all_entry.get("1.0", "end-1c"))
-            ukuran = float(ukuran_layar_all_entry.get("1.0", "end-1c"))
-            resolusi = resolusi_layar_entry.get("1.0", tk.END).strip()
-
-            # Memanggil fungsi filter dan menampilkan hasil
-            hasil_filter = filter_berdasarkan_all(harga, ukuran, resolusi)
-            tampilkan_hasil_filter(hasil_filter)
-
-        apply_button = ttk.Button(filter_window, text="Terapkan Filter", command=apply_filter)
-        apply_button.grid(row=7, column=0, padx=20, pady=(10, 20), sticky="ew")
-
-        # Menentukan panjang label_intro agar mengisi seluruh lebar jendela
-        filter_window.update_idletasks()
-        label_intro.config(width=filter_window.winfo_width())
-
-    elif pilihan == '2':
         filter_window = tk.Toplevel(root)
         filter_window.title("Filter Berdasarkan Harga")
         filter_window.geometry("1366x768")
+        font_options = ("Helvetica", 16)
 
-        label_intro = ttk.Label(filter_window, text="Filter Monitor Berdasarkan Harga", font=("Helvetica", 14))
-        label_intro.pack(pady=(10, 5), padx=10)  # Mengurangi padx dan pady
+        label_intro = ttk.Label(filter_window, text="Filter Monitor Berdasarkan Harga", font=("Helvetica", 24))
+        label_intro.pack(pady=(10, 5), padx=10) 
 
-        harga_awal_label = ttk.Label(filter_window, text="Masukkan Harga Awal : ")
-        harga_awal_label.pack(pady=5, padx=10, anchor="w")  # Mengurangi padx
+        harga_awal_label = ttk.Label(
+            filter_window, 
+            text="Masukkan Harga Awal : ",
+            font=font_options
+        )
+        harga_awal_label.pack(pady=5, padx=10, anchor="w")
 
-        harga_awal_entry = tk.Text(filter_window, height=3, font=("Helvetica", 12))
-        harga_awal_entry.pack(pady=5, padx=10, fill="x")  # Mengurangi padx
+        harga_awal_entry = tk.Text(filter_window, height=3, font=("Helvetica", 16))
+        harga_awal_entry.pack(pady=5, padx=10, fill="x")  
 
-        harga_akhir_label = ttk.Label(filter_window, text="Masukkan Harga Akhir : ")
-        harga_akhir_label.pack(pady=5, padx=10, anchor="w")  # Mengurangi padx
+        harga_akhir_label = ttk.Label(
+            filter_window, 
+            text="Masukkan Harga Akhir : ",
+            font=font_options
+        )
+        harga_akhir_label.pack(pady=5, padx=10, anchor="w")
 
-        harga_akhir_entry = tk.Text(filter_window, height=3, font=("Helvetica", 12))
-        harga_akhir_entry.pack(pady=5, padx=10, fill="x")  # Mengurangi padx
+        harga_akhir_entry = tk.Text(filter_window, height=3, font=("Helvetica", 16))
+        harga_akhir_entry.pack(pady=5, padx=10, fill="x")  
 
         def apply_filter():
             harga_awal = float(harga_awal_entry.get("1.0", "end-1c"))
@@ -182,25 +146,28 @@ def process_input():
             hasil_filter = filter_berdasarkan_harga(harga_awal, harga_akhir) 
             tampilkan_hasil_filter(hasil_filter)
 
-        apply_button = ttk.Button(filter_window, text="Terapkan Filter", command=apply_filter)
-        apply_button.pack(pady=10, padx=10, fill="x")  # Mengatur padding dan pengisian agar tombol muncul dengan baik
+        apply_button = ttk.Button(filter_window, text="Terapkan Filter", command=apply_filter, style="TButton")
+        apply_button.pack(pady=10, padx=10, fill="x")  
+        style = ttk.Style()
+        style.configure("TButton", font=("Helvetica", 16))
 
         # Menentukan panjang label_intro agar mengisi seluruh lebar jendela
         filter_window.update_idletasks()
 
 
-    elif pilihan == '3':
+    elif pilihan == '2':
         filter_window = tk.Toplevel(root)
         filter_window.title("Filter Berdasarkan Ukuran Layar")
         filter_window.geometry("1366x768")
+        font_options = ("Helvetica", 16) 
 
-        label_intro = ttk.Label(filter_window, text="Filter Monitor Berdasarkan Ukuran", font=("Helvetica", 14))
+        label_intro = ttk.Label(filter_window, text="Filter Monitor Berdasarkan Ukuran", font=("Helvetica", 16))
         label_intro.grid(row=0, column=0, columnspan=2, padx=20, pady=(20, 10), sticky="n")  # Menggunakan sticky="n" agar judul berada di tengah
 
-        ukuran_layar_label = ttk.Label(filter_window, text="Masukkan Ukuran Layar Yang Diinginkan : ")
-        ukuran_layar_label.grid(row=1, column=0, padx=20, pady=0, sticky="w")  # Ubah pady menjadi 0
+        ukuran_layar_label = ttk.Label(filter_window, text="Masukkan Ukuran Layar Yang Diinginkan : ", font=font_options)
+        ukuran_layar_label.grid(row=1, column=0, padx=20, pady=0, sticky="w") 
 
-        ukuran_layar_entry = tk.Text(filter_window, height=5, font=("Helvetica", 12))
+        ukuran_layar_entry = tk.Text(filter_window, height=5, font=("Helvetica", 16))
         ukuran_layar_entry.grid(row=2, column=0, columnspan=2, padx=20, pady=0, sticky="ew")  # Ubah pady menjadi 0
 
         
@@ -209,7 +176,9 @@ def process_input():
             hasil_filter = filter_berdasarkan_ukuran(ukuran_layar)
             tampilkan_hasil_filter(hasil_filter)
 
-        apply_button = ttk.Button(filter_window, text="Terapkan Filter", command=apply_filter)
+        style = ttk.Style()
+        style.configure("Terapkan.TButton", font=("Helvetica", 16))
+        apply_button = ttk.Button(filter_window, text="Terapkan Filter", command=apply_filter, style="Terapkan.TButton")
         apply_button.grid(row=3, column=0, columnspan=2, padx=20, pady=(10, 20), sticky="ew")
 
         # Konfigurasi agar kolom dan baris jendela menyesuaikan konten
@@ -221,17 +190,17 @@ def process_input():
         filter_window.grid_rowconfigure(3, weight=1)
 
 
-
-
-    elif pilihan == '4':
+    elif pilihan == '3':
         filter_window = tk.Toplevel(root)
         filter_window.title("Filter Berdasarkan Resolusi Layar")
         filter_window.geometry("1366x768")
+        style = ttk.Style()
+        style.configure("Resolusi.TLabel", font=("Helvetica", 16))
 
-        label_intro = ttk.Label(filter_window, text="Filter Monitor Berdasarkan Resolusi", font=("Helvetica", 14))
+        label_intro = ttk.Label(filter_window, text="Filter Monitor Berdasarkan Resolusi", font=("Helvetica", 16))
         label_intro.grid(row=0, column=0, columnspan=2, padx=20, pady=(20, 10), sticky="n")
 
-        resolusi_layar_label = ttk.Label(filter_window, text="Resolusi Layar (contoh: 1920x1080):")
+        resolusi_layar_label = ttk.Label(filter_window, text="Resolusi Layar (contoh: 1920x1080):", style="Resolusi.TLabel")
         resolusi_layar_label.grid(row=1, column=0, padx=20, pady=5, sticky="w")
 
         resolusi_layar_entry = tk.Text(filter_window, height=3, font=("Helvetica", 12))
@@ -242,7 +211,9 @@ def process_input():
             hasil_filter = filter_berdasarkan_resolusi(resolusi_layar)
             tampilkan_hasil_filter(hasil_filter)
 
-        apply_button = ttk.Button(filter_window, text="Terapkan Filter", command=apply_filter)
+        style = ttk.Style()
+        style.configure("Terapkan.TButton", font=("Helvetica", 16))
+        apply_button = ttk.Button(filter_window, text="Terapkan Filter", command=apply_filter, style="Terapkan.TButton")
         apply_button.grid(row=3, column=0, columnspan=2, padx=20, pady=(10, 20), sticky="ew")
 
         # Konfigurasi agar kolom dan baris jendela menyesuaikan konten
@@ -281,14 +252,26 @@ def main():
     label_title.pack(pady=int(screen_height * 0.02))
 
     # Label untuk opsi
-    label_options = ttk.Label(main_frame, text="Pilihan:\n1: Filter harga, ukuran layar, dan resolusi\n2: Filter harga\n3: Filter ukuran layar\n4: Filter resolusi layar", justify="left", wraplength=int(screen_width * 0.9))
+    font_options = ("Helvetica", 16)  # '16' is the font size
+
+    # Create the label with larger font size
+    label_options = ttk.Label(
+        main_frame, 
+        text="Pilihan:\n1: Filter harga\n2: Filter ukuran layar\n3: Filter resolusi layar", 
+        justify="left", 
+        wraplength=int(screen_width * 0.9),
+        font=font_options
+    )
     label_options.pack(pady=int(screen_height * 0.02))
 
-    # Label intro
-    label_intro = ttk.Label(main_frame, text="Pilih Opsi Filter:")
+    label_intro = ttk.Label(
+        main_frame, 
+        text="Pilih Opsi Filter:", 
+        font=font_options
+    )
     label_intro.pack(pady=int(screen_height * 0.02))
 
-    values = ["1", "2", "3", "4"]
+    values = ["1", "2", "3"]
     combo = ttk.Combobox(main_frame, values=values, font=("Helvetica", 20))
     combo.pack(pady=int(screen_height * 0.02), fill="x")
 
